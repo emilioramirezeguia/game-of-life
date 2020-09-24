@@ -1,0 +1,15 @@
+.playground {
+  display: flex;
+  flex-direction: column;
+  padding: 0 2.5%;
+  width: 50%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(26, 20px);
+}
+
+.MuiButtonGroup-root {
+  margin: 2.5% auto 2.5%;
+}
