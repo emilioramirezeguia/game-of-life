@@ -1,35 +1,36 @@
-import React, { useState, useRef, useCallback } from "react";
-import produce, { produceWithPatches } from "immer";
+import React, { useState, useRef } from "react";
+import produce from "immer";
+import Cell from "./Cell";
 
 /* helper functions */
-import generateEmptyCanvas from "../helpers/generateEmptyCanvas";
-import generateRandomCanvas from "../helpers/generateRandomCanvas";
+import generateEmptyGrid from "../helpers/generateEmptyGrid";
+import generateRandomGrid from "../helpers/generateRandomGrid";
+
+/* constants */
+import coordinates from "../constants/coordinates";
+import marks from "../constants/marks";
 
 /* styles */
 import "../styles/playground.scss";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import Slider from "@material-ui/core/Slider";
-import gliderPreset from "../helpers/gliderPreset";
-import lightweightSpaceshipPreset from "../helpers/lightweightSpaceshipPreset.js";
-
-// values used to help count a cell's number of neighbors inside runSimulation()
-const operations = [
-  [0, 1],
-  [0, -1],
-  [1, -1],
-  [-1, 1],
-  [1, 1],
-  [-1, -1],
-  [1, 0],
-  [-1, 0],
-];
 
 function Playground(props) {
-  const [grid, setGrid] = useState(() => generateEmptyCanvas());
+  const [grid, setGrid] = useState(() => generateEmptyGrid());
   const [running, setRunning] = useState(false);
   const [generations, setGenerations] = useState(0);
   const [playbackSpeed, setPlaybackSpeed] = useState(100);
+
+  // toggle the cell's state and background color manually
+  const toggleLife = (i, j) => {
+    if (!runningRef.current) {
+      const newGrid = produce(grid, (gridCopy) => {
+        gridCopy[i][j] = gridCopy[i][j] ? 0 : 1;
+      });
+      setGrid(newGrid);
+    }
+  };
 
   // create a reference of the running state that persists across renders and doesn't trigger a re-render
   const runningRef = useRef(running);
@@ -49,7 +50,7 @@ function Playground(props) {
           for (let j = 0; j < currentGrid.length; j++) {
             // check how many neighbors each cell has
             let neighbors = 0;
-            operations.forEach(([x, y]) => {
+            coordinates.forEach(([x, y]) => {
               const newI = i + x;
               const newJ = j + y;
               if (
@@ -87,7 +88,7 @@ function Playground(props) {
           for (let j = 0; j < currentGrid.length; j++) {
             // check how many neighbors each cell has
             let neighbors = 0;
-            operations.forEach(([x, y]) => {
+            coordinates.forEach(([x, y]) => {
               const newI = i + x;
               const newJ = j + y;
               if (
@@ -114,50 +115,6 @@ function Playground(props) {
     setGenerations((generation) => generation + 1);
   };
 
-  // values used for slider simulation speed
-  const marks = [
-    {
-      value: 100,
-      label: "0.1s",
-    },
-    {
-      value: 200,
-      label: "0.2s",
-    },
-    {
-      value: 300,
-      label: "0.3s",
-    },
-    {
-      value: 400,
-      label: "0.4s",
-    },
-    {
-      value: 500,
-      label: "0.5s",
-    },
-    {
-      value: 600,
-      label: "0.6s",
-    },
-    {
-      value: 700,
-      label: "0.7s",
-    },
-    {
-      value: 800,
-      label: "0.8s",
-    },
-    {
-      value: 900,
-      label: "0.9s",
-    },
-    {
-      value: 1000,
-      label: "1s",
-    },
-  ];
-
   const handleChange = (event, newValue) => {
     setPlaybackSpeed(newValue);
   };
@@ -168,23 +125,13 @@ function Playground(props) {
       <div className="grid">
         {grid.map((rows, i) =>
           rows.map((columns, j) => (
-            <div
+            <Cell
               key={`${i}-${j}`}
               // toggle the cell's state and background color manually
-              onClick={() => {
-                if (!running) {
-                  const newCanvas = produce(grid, (gridCopy) => {
-                    gridCopy[i][j] = gridCopy[i][j] ? 0 : 1;
-                  });
-                  setGrid(newCanvas);
-                }
-              }}
-              style={{
-                width: 10,
-                height: 10,
-                backgroundColor: grid[i][j] ? "black" : undefined,
-                border: "solid 1px black",
-              }}
+              x={i}
+              y={j}
+              grid={grid}
+              toggleLife={toggleLife}
             />
           ))
         )}
@@ -219,28 +166,14 @@ function Playground(props) {
         </Button>
         <Button
           onClick={() => {
-            setGrid(generateRandomCanvas());
+            setGrid(generateRandomGrid());
           }}
         >
           Random
         </Button>
-        {/* <Button
-          onClick={() => {
-            setGrid(gliderPreset());
-          }}
-        >
-          Glider
-        </Button>
         <Button
           onClick={() => {
-            setGrid(lightweightSpaceshipPreset());
-          }}
-        >
-          Lightweight Spaceship
-        </Button> */}
-        <Button
-          onClick={() => {
-            setGrid(generateEmptyCanvas());
+            setGrid(generateEmptyGrid());
             setGenerations(0);
           }}
         >

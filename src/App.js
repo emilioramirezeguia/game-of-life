@@ -19,9 +19,7 @@ function App() {
       </h1>
       <div className="top-section">
         <Playground />
-        <div className="right-section">
-          <Rules />
-        </div>
+        <Rules />
       </div>
     </Container>
   );
