@@ -180,8 +180,8 @@ function Playground(props) {
                 }
               }}
               style={{
-                width: 18,
-                height: 18,
+                width: 10,
+                height: 10,
                 backgroundColor: grid[i][j] ? "black" : undefined,
                 border: "solid 1px black",
               }}
@@ -224,7 +224,7 @@ function Playground(props) {
         >
           Random
         </Button>
-        <Button
+        {/* <Button
           onClick={() => {
             setGrid(gliderPreset());
           }}
@@ -237,7 +237,7 @@ function Playground(props) {
           }}
         >
           Lightweight Spaceship
-        </Button>
+        </Button> */}
         <Button
           onClick={() => {
             setGrid(generateEmptyCanvas());

@@ -1,10 +1,10 @@
 export default function generateEmptyCanvas() {
   // create a one-dimensional array capable of storing 25 objects
-  let canvas = new Array(26);
+  let canvas = new Array(50);
 
   // loop through the array, adding a new array to each location
   for (let i = 0; i < canvas.length; i++) {
-    canvas[i] = new Array(26); // new array of 25 locations
+    canvas[i] = new Array(50); // new array of 25 locations
   }
 
   // populate the two-dimensional array with the initial state of 0 ("dead");

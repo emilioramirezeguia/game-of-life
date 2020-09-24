@@ -1,7 +1,7 @@
 export default function lightweightSpaceshipPreset() {
-  let canvas = new Array(26);
+  let canvas = new Array(50);
   for (let i = 0; i < canvas.length; i++) {
-    canvas[i] = new Array(26);
+    canvas[i] = new Array(50);
   }
 
   // pre-popluate the grid with a Glider configuration
