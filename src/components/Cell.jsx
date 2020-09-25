@@ -9,8 +9,8 @@ function Cell(props) {
         toggleLife(x, y);
       }}
       style={{
-        width: 12,
-        height: 12,
+        width: 16,
+        height: 16,
         backgroundColor: grid[x][y] ? "black" : undefined,
         border: "solid 1px black",
       }}
