@@ -1,10 +1,10 @@
 export default function generateRandomGrid() {
   // create a one-dimensional array capable of storing 50 objects
-  let grid = new Array(40);
+  let grid = new Array(36);
 
   // loop through the array, adding a new array to each location
   for (let i = 0; i < grid.length; i++) {
-    grid[i] = new Array(40);
+    grid[i] = new Array(36);
   }
 
   // populate half of two-dimensional array with the initial state of 0 ("dead") and the other half with 1 ("alive");

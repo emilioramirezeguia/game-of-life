@@ -5,14 +5,16 @@
   width: 70%;
 }
 
+h1 {
+  margin: 1%;
+}
+
 .grid {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(36, 16px);
   margin: 0 auto;
-  align-self: center;
 }
 
 .MuiButtonGroup-root {
-  margin: 2.5% auto 2.5%;
+  margin: 2% auto 2%;
 }
